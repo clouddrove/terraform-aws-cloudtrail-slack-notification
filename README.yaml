@@ -1,0 +1,50 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name : Terraform AWS Cloudtrail Logs
+
+# License of this project
+license: "MIT"
+
+# Canonical GitHub repo
+github_repo: clouddrove/terraform-aws-cloudtrail-logs
+
+# Badges to display
+badges:
+  - name: "Terraform"
+    image: "https://img.shields.io/badge/Terraform-v0.12-green"
+    url: "https://www.terraform.io"
+  - name: "Licence"
+    image: "https://img.shields.io/badge/License-MIT-blue.svg"
+    url: "LICENSE.md"
+
+#  description of this project
+description: |-
+  Terraform module to create Lambda resource on AWS for sending notification when anything do from console in AWS through lambda function.
+
+# extra content
+# please not remove these two If you need add more
+include:
+  - "terraform.md"
+
+# How to use this project
+usage : |-
+  ### Simple example
+  Here is an example of how you can use this module in your inventory structure:
+  ```hcl
+  module "cloudtrail-logs" {
+    source                     = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-logs.git?ref=tags/0.12.0"
+    name                       = "cloudtrail-logs"
+    application                = "clouddrove"
+    environment                = "test"
+    label_order                = ["environment", "name", "application"]
+    enabled                    = true
+    bucket_arn                 = "arn:aws:s3:::security-bucket-log-clouddrove"
+    bucket_name                = "security-bucket-log-clouddrove"
+    variables                  = { "SLACK_HOOK_URL" = "https://hooks.slack.com/services/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H", "SLACK_CHANNEL" = "testing", "EXCLUDE_ACCOUNT_IDS" = "", "USER_AGENT" = "console.amazonaws.com" }
+  }
+  ```
