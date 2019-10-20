@@ -73,16 +73,21 @@ This module has a few dependencies:
 ### Simple example
 Here is an example of how you can use this module in your inventory structure:
 ```hcl
-module "cloudtrail-logs" {
+module "cloudtrail-slack-notification" {
   source      = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification.git?ref=tags/0.12.0"
-  name        = "cloudtrail-logs"
+  name        = "cloudtrail-slack-notification"
   application = "clouddrove"
   environment = "test"
   label_order = ["environment", "name", "application"]
   enabled     = true
   bucket_arn  = "arn:aws:s3:::security-bucket-log-clouddrove"
   bucket_name = "security-bucket-log-clouddrove"
-  variables   = { "SLACK_HOOK_URL" = "https://hooks.slack.com/services/TEE0GF0QZ/DFGHJHGFDFGHJ/YL5MzhCSJFHHUdfgh2Hs1qiMXVH", "SLACK_CHANNEL" = "testing", "EXCLUDE_ACCOUNT_IDS" = "", "USER_AGENT" = "signin.amazonaws.com" }
+  variables   = {
+    "SLACK_HOOK_URL"      = "https://hooks.slack.com/services/TEE0GF0QZ/DFGHJHGFDFGHJ/YL5MzhCSJFHHUdfgh2Hs1qiMXVH",
+    "SLACK_CHANNEL"       = "testing",
+    "EXCLUDE_ACCOUNT_IDS" = "",
+    "USER_AGENT"          = "signin.amazonaws.com"
+  }
 }
 ```
 
@@ -95,13 +100,13 @@ module "cloudtrail-logs" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| application | Snapshot Create Lambda Application (e.g. `cd` or `clouddrove`). | string | `` | no |
+| application | Lambda Application (e.g. `cd` or `clouddrove`). | string | `` | no |
 | bucket_arn | S3 Bucket ARN. | string | `` | no |
 | bucket_name | S3 Bucket Name. | string | `` | no |
 | enabled | Whether to create lambda function. | bool | `false` | no |
-| environment | Snapshot Create Lambda Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
+| environment | Lambda Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
 | label_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
-| name | Snapshot Create Lambda Name  (e.g. `app` or `cluster`). | string | `` | no |
+| name | Lambda Name  (e.g. `app` or `cluster`). | string | `` | no |
 | variables | A map that defines environment variables for the Lambda function. | map | `<map>` | no |
 
 ## Outputs

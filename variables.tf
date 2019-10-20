@@ -3,19 +3,19 @@
 variable "name" {
   type        = string
   default     = ""
-  description = "Snapshot Create Lambda Name  (e.g. `app` or `cluster`)."
+  description = "Lambda Name  (e.g. `app` or `cluster`)."
 }
 
 variable "application" {
   type        = string
   default     = ""
-  description = "Snapshot Create Lambda Application (e.g. `cd` or `clouddrove`)."
+  description = "Lambda Application (e.g. `cd` or `clouddrove`)."
 }
 
 variable "environment" {
   type        = string
   default     = ""
-  description = "Snapshot Create Lambda Environment (e.g. `prod`, `dev`, `staging`)."
+  description = "Lambda Environment (e.g. `prod`, `dev`, `staging`)."
 }
 
 variable "label_order" {
