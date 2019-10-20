@@ -4,11 +4,13 @@
 
 
 <h1 align="center">
-    Terraform AWS Cloudtrail Logs
+    Terraform AWS Cloudtrail Slack Notification
+
+
 </h1>
 
 <p align="center" style="font-size: 1.2rem;">
-    Terraform module to create Lambda resource on AWS for sending notification when anything do from console in AWS through lambda function.
+    Terraform module to create Lambda resource on AWS for sending notification when anything done from console in AWS.
      </p>
 
 <p align="center">
@@ -24,13 +26,13 @@
 </p>
 <p align="center">
 
-<a href='https://facebook.com/sharer/sharer.php?u=https://github.com/clouddrove/terraform-aws-cloudtrail-logs'>
+<a href='https://facebook.com/sharer/sharer.php?u=https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification'>
   <img title="Share on Facebook" src="https://user-images.githubusercontent.com/50652676/62817743-4f64cb80-bb59-11e9-90c7-b057252ded50.png" />
 </a>
-<a href='https://www.linkedin.com/shareArticle?mini=true&title=Terraform+AWS+Cloudtrail+Logs&url=https://github.com/clouddrove/terraform-aws-cloudtrail-logs'>
+<a href='https://www.linkedin.com/shareArticle?mini=true&title=Terraform+AWS+Cloudtrail+Slack+Notification&url=https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification'>
   <img title="Share on LinkedIn" src="https://user-images.githubusercontent.com/50652676/62817742-4e339e80-bb59-11e9-87b9-a1f68cae1049.png" />
 </a>
-<a href='https://twitter.com/intent/tweet/?text=Terraform+AWS+Cloudtrail+Logs&url=https://github.com/clouddrove/terraform-aws-cloudtrail-logs'>
+<a href='https://twitter.com/intent/tweet/?text=Terraform+AWS+Cloudtrail+Slack+Notification&url=https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification'>
   <img title="Share on Twitter" src="https://user-images.githubusercontent.com/50652676/62817740-4c69db00-bb59-11e9-8a79-3580fbbf6d5c.png" />
 </a>
 
@@ -65,22 +67,22 @@ This module has a few dependencies:
 ## Examples
 
 
-**IMPORTANT:** Since the `master` branch used in `source` varies based on new modifications, we suggest that you use the release versions [here](https://github.com/clouddrove/terraform-aws-cloudtrail-logs/releases).
+**IMPORTANT:** Since the `master` branch used in `source` varies based on new modifications, we suggest that you use the release versions [here](https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification/releases).
 
 
 ### Simple example
 Here is an example of how you can use this module in your inventory structure:
 ```hcl
 module "cloudtrail-logs" {
-  source                     = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-logs.git?ref=tags/0.12.0"
-  name                       = "cloudtrail-logs"
-  application                = "clouddrove"
-  environment                = "test"
-  label_order                = ["environment", "name", "application"]
-  enabled                    = true
-  bucket_arn                 = "arn:aws:s3:::security-bucket-log-clouddrove"
-  bucket_name                = "security-bucket-log-clouddrove"
-  variables                  = { "SLACK_HOOK_URL" = "https://hooks.slack.com/services/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H", "SLACK_CHANNEL" = "testing", "EXCLUDE_ACCOUNT_IDS" = "", "USER_AGENT" = "console.amazonaws.com" }
+  source      = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification.git?ref=tags/0.12.0"
+  name        = "cloudtrail-logs"
+  application = "clouddrove"
+  environment = "test"
+  label_order = ["environment", "name", "application"]
+  enabled     = true
+  bucket_arn  = "arn:aws:s3:::security-bucket-log-clouddrove"
+  bucket_name = "security-bucket-log-clouddrove"
+  variables   = { "SLACK_HOOK_URL" = "https://hooks.slack.com/services/TEE0GF0QZ/DFGHJHGFDFGHJ/YL5MzhCSJFHHUdfgh2Hs1qiMXVH", "SLACK_CHANNEL" = "testing", "EXCLUDE_ACCOUNT_IDS" = "", "USER_AGENT" = "signin.amazonaws.com" }
 }
 ```
 
@@ -122,9 +124,9 @@ You need to run the following command in the testing folder:
 
 
 ## Feedback
-If you come accross a bug or have any feedback, please log it in our [issue tracker](https://github.com/clouddrove/terraform-aws-cloudtrail-logs/issues), or feel free to drop us an email at [hello@clouddrove.com](mailto:hello@clouddrove.com).
+If you come accross a bug or have any feedback, please log it in our [issue tracker](https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification/issues), or feel free to drop us an email at [hello@clouddrove.com](mailto:hello@clouddrove.com).
 
-If you have found it worth your time, go ahead and give us a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-cloudtrail-logs)!
+If you have found it worth your time, go ahead and give us a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification)!
 
 ## About us
 
