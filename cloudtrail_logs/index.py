@@ -99,7 +99,7 @@ def sendSlackMessage(record):
                     }
                 ],
                 "footer": "CloudDrove",
-                "footer_icon": "https://is5-ssl.mzstatic.com/image/thumb/Purple113/v4/70/dd/7c/70dd7cf3-be82-f6a2-9746-e7362a00aa2f/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-7.png/600x600wa.png",
+                "footer_icon": "https://clouddrove.com/media/images/favicon.ico",
             }
         ]
     }
