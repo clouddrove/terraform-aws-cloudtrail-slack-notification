@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "cloudtrail-slack-notification" {
-  source = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-logs.git?ref=tags/0.12.0"
+  source = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification.git?ref=tags/0.12.0"
 
   name        = "cloudtrail-slack-notification"
   application = "clouddrove"
