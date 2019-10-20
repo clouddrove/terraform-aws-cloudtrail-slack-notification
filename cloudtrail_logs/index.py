@@ -33,7 +33,7 @@ logger.setLevel(logging.INFO)
 def print_short_record(record):
     """
     Prints out an abbreviated, one-line representation of a CloudTrail record.
-    
+
     :return: always False since not a real scan
     """
     print('[{timestamp}] {username}\t{region}\t{ip}\t{service}:{action}'.format(
@@ -44,7 +44,7 @@ def print_short_record(record):
         service=record['eventSource'].split('.')[0],
         action=record['eventName']
     ))
-    
+
     return False
 
 def get_records(session, bucket, key):
@@ -62,13 +62,13 @@ def get_records(session, bucket, key):
         with gzip.GzipFile(fileobj=obj) as logfile:
             loadedJson = json.load(logfile)
             records = loadedJson["Records"]
-            sorted_records = sorted(records, key=lambda r: r['eventTime']) 
+            sorted_records = sorted(records, key=lambda r: r['eventTime'])
             return sorted_records
 
 
 def get_log_file_location(event):
     """
-    Generator for the bucket and key names of each CloudTrail log 
+    Generator for the bucket and key names of each CloudTrail log
     file contained in the event sent to this function from S3.
     (usually only one but this ensures we process them all).
     :param event: S3:ObjectCreated:Put notification event
@@ -113,7 +113,7 @@ def sendSlackMessage(record):
         logger.error("Request failed: %s", e)
     except URLError as e:
         logger.error("Server connection failed: %s", e)
-    
+
 
 
 def handler(event, context):
@@ -121,16 +121,16 @@ def handler(event, context):
     session = boto3.session.Session()
     cloudwatch = session.client('cloudwatch')
 
-    # Get the S3 bucket and key for each log file contained in the event 
+    # Get the S3 bucket and key for each log file contained in the event
     for bucket, key in get_log_file_location(event):
-        
+
         # Load the CloudTrail log file and extract its records
         print('Loading CloudTrail log file s3://{}/{}'.format(bucket, key))
         records = get_records(session, bucket, key)
         print('Number of records in log file: {}'.format(len(records)))
 
         # Process the CloudTrail records
-        for record in records:  
+        for record in records:
             if record["recipientAccountId"] not in EXCLUDE_ACCOUNT_IDS and record['userAgent'] in USER_AGENT_LIST and ("Describe" not in record['eventName'] and "Get" not in record['eventName'] and "List" not in record['eventName'] and "View" not in record['eventName'] and "Validate" not in record['eventName'] and "Look" not in record['eventName'] and "Retrieve" not in record['eventName']):
                 print_short_record(record)
                 sendSlackMessage(record)

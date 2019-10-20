@@ -4,11 +4,11 @@
 
 
 <h1 align="center">
-    Terraform AWS Snapshot
+    Terraform AWS Cloudtrail Logs
 </h1>
 
 <p align="center" style="font-size: 1.2rem;">
-    Terraform module to create Lambda resource on AWS for create and delete snapshot backups through lambda function.
+    Terraform module to create Lambda resource on AWS for sending notification when anything do from console in AWS through lambda function.
      </p>
 
 <p align="center">
@@ -24,13 +24,13 @@
 </p>
 <p align="center">
 
-<a href='https://facebook.com/sharer/sharer.php?u=https://github.com/clouddrove/terraform-aws-snapshot'>
+<a href='https://facebook.com/sharer/sharer.php?u=https://github.com/clouddrove/terraform-aws-cloudtrail-logs'>
   <img title="Share on Facebook" src="https://user-images.githubusercontent.com/50652676/62817743-4f64cb80-bb59-11e9-90c7-b057252ded50.png" />
 </a>
-<a href='https://www.linkedin.com/shareArticle?mini=true&title=Terraform+AWS+Snapshot&url=https://github.com/clouddrove/terraform-aws-snapshot'>
+<a href='https://www.linkedin.com/shareArticle?mini=true&title=Terraform+AWS+Cloudtrail+Logs&url=https://github.com/clouddrove/terraform-aws-cloudtrail-logs'>
   <img title="Share on LinkedIn" src="https://user-images.githubusercontent.com/50652676/62817742-4e339e80-bb59-11e9-87b9-a1f68cae1049.png" />
 </a>
-<a href='https://twitter.com/intent/tweet/?text=Terraform+AWS+Snapshot&url=https://github.com/clouddrove/terraform-aws-snapshot'>
+<a href='https://twitter.com/intent/tweet/?text=Terraform+AWS+Cloudtrail+Logs&url=https://github.com/clouddrove/terraform-aws-cloudtrail-logs'>
   <img title="Share on Twitter" src="https://user-images.githubusercontent.com/50652676/62817740-4c69db00-bb59-11e9-8a79-3580fbbf6d5c.png" />
 </a>
 
@@ -65,27 +65,22 @@ This module has a few dependencies:
 ## Examples
 
 
-**IMPORTANT:** Since the `master` branch used in `source` varies based on new modifications, we suggest that you use the release versions [here](https://github.com/clouddrove/terraform-aws-snapshot/releases).
+**IMPORTANT:** Since the `master` branch used in `source` varies based on new modifications, we suggest that you use the release versions [here](https://github.com/clouddrove/terraform-aws-cloudtrail-logs/releases).
 
 
-Here are some examples of how you can use this module in your inventory structure:
-### Basic Function
+### Simple example
+Here is an example of how you can use this module in your inventory structure:
 ```hcl
-module "snapshot" {
-  source                      = "git::https://github.com/clouddrove/terraform-aws-snapshot.git?ref=tags/0.12.0"
-  create_name                 = "snapshot-create"
-  create_application          = "clouddrove"
-  create_environment          = "test"
-  delete_name                 = "snapshot-delete"
-  delete_application          = "clouddrove"
-  delete_environment          = "test"
-  label_order                 = ["environment", "name", "application"]
-  enabled                     = true
-  region                      = "eu-west-1"
-  account_id                  = "xxxxxxxxxxxxxx"
-  create_schedule_expression  = "cron(0 2 * * ? *)"
-  delete_schedule_expression  = "cron(0 1 * * ? *)"
-  variables                   = {"webhook_url"="https://hooks.slack.com/services/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"}
+module "cloudtrail-logs" {
+  source                     = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-logs.git?ref=tags/0.12.0"
+  name                       = "cloudtrail-logs"
+  application                = "clouddrove"
+  environment                = "test"
+  label_order                = ["environment", "name", "application"]
+  enabled                    = true
+  bucket_arn                 = "arn:aws:s3:::security-bucket-log-clouddrove"
+  bucket_name                = "security-bucket-log-clouddrove"
+  variables                  = { "SLACK_HOOK_URL" = "https://hooks.slack.com/services/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H", "SLACK_CHANNEL" = "testing", "EXCLUDE_ACCOUNT_IDS" = "", "USER_AGENT" = "console.amazonaws.com" }
 }
 ```
 
@@ -98,28 +93,38 @@ module "snapshot" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| create_application | Snapshot Create Lambda Application (e.g. `cd` or `clouddrove`). | string | `` | no |
-| create_environment | Snapshot Create Lambda Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
-| create_name | Snapshot Create Lambda Name  (e.g. `app` or `cluster`). | string | `` | no |
-| delete_application | Snapshot Delete Lambda Application (e.g. `cd` or `clouddrove`). | string | `` | no |
-| delete_environment | Snapshot Delete Lambda Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
-| delete_name | Snapshot Delete Lambda Name  (e.g. `app` or `cluster`). | string | `` | no |
+| application | Snapshot Create Lambda Application (e.g. `cd` or `clouddrove`). | string | `` | no |
+| bucket_arn | S3 Bucket ARN. | string | `` | no |
+| bucket_name | S3 Bucket Name. | string | `` | no |
 | enabled | Whether to create lambda function. | bool | `false` | no |
+| environment | Snapshot Create Lambda Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
 | label_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
+| name | Snapshot Create Lambda Name  (e.g. `app` or `cluster`). | string | `` | no |
+| variables | A map that defines environment variables for the Lambda function. | map | `<map>` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| create-arn | The Amazon Resource Name (ARN) identifying your snapshot create Lambda Function. |
-| delete-arn | The Amazon Resource Name (ARN) identifying your snapshot delete Lambda Function. |
+| log-arn | The Amazon Resource Name (ARN) identifying your cloudtrail logs Lambda Function. |
+
+
+
+
+## Testing
+In this module testing is performed with [terratest](https://github.com/gruntwork-io/terratest) and it creates a small piece of infrastructure, matches the output like ARN, ID and Tags name etc and destroy infrastructure in your AWS account. This testing is written in GO, so you need a [GO environment](https://golang.org/doc/install) in your system.
+
+You need to run the following command in the testing folder:
+```hcl
+  go test -run Test
+```
 
 
 
 ## Feedback
-If you come accross a bug or have any feedback, please log it in our [issue tracker](https://github.com/clouddrove/terraform-aws-snapshot/issues), or feel free to drop us an email at [hello@clouddrove.com](mailto:hello@clouddrove.com).
+If you come accross a bug or have any feedback, please log it in our [issue tracker](https://github.com/clouddrove/terraform-aws-cloudtrail-logs/issues), or feel free to drop us an email at [hello@clouddrove.com](mailto:hello@clouddrove.com).
 
-If you have found it worth your time, go ahead and give us a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-snapshot)!
+If you have found it worth your time, go ahead and give us a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-cloudtrail-logs)!
 
 ## About us
 

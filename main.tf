@@ -31,7 +31,7 @@ module "cloudtrail-logs" {
     "s3.amazonaws.com"
   ]
   source_arns = [var.bucket_arn]
-  variables = var.variables
+  variables   = var.variables
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
