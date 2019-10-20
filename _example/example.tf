@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "logs" {
-  source = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-logs.git"
+  source = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-logs.git?ref=tags/0.12.0"
 
   name        = "cloudtrail-logs"
   application = "clouddrove"
