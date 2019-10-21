@@ -44,6 +44,7 @@ usage : |-
     enabled     = true
     bucket_arn  = "arn:aws:s3:::security-bucket-log-clouddrove"
     bucket_name = "security-bucket-log-clouddrove"
+    filename    =  "./../cloudtrail_logs"
     variables   = {
       "SLACK_HOOK_URL"      = "https://hooks.slack.com/services/TEE0GF0QZ/DFGHJHGFDFGHJ/YL5MzhCSJFHHUdfgh2Hs1qiMXVH",
       "SLACK_CHANNEL"       = "testing",

@@ -3,7 +3,7 @@
 
 #Module      : Cloudtrail Logs
 #Description : This terraform module is designed to create cloudtrail log.
-module "cloudtrail-logs" {
+module "cloudtrail-slack" {
   source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.12.1"
 
   name        = var.name
@@ -12,7 +12,7 @@ module "cloudtrail-logs" {
   label_order = var.label_order
   enabled     = var.enabled
 
-  filename = "./../cloudtrail_logs"
+  filename = var.filename
   handler  = "index.handler"
   runtime  = "python3.7"
   iam_actions = [
@@ -38,7 +38,7 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
   bucket = var.bucket_name
 
   lambda_function {
-    lambda_function_arn = module.cloudtrail-logs.arn
+    lambda_function_arn = module.cloudtrail-slack.arn
     events              = ["s3:ObjectCreated:*"]
     filter_prefix       = ""
     filter_suffix       = ""
