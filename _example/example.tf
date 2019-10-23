@@ -1,22 +1,24 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = "us-east-1"
 }
 
 module "cloudtrail-slack-notification" {
-  source = "git::https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification.git?ref=tags/0.12.0"
+  source = "./../"
 
   name        = "cloudtrail-slack-notification"
   application = "clouddrove"
   environment = "test"
   label_order = ["environment", "name", "application"]
   enabled     = true
-  bucket_arn  = "arn:aws:s3:::security-bucket-log-clouddrove"
-  bucket_name = "security-bucket-log-clouddrove"
-  filename    = "./../cloudtrail_logs"
+  bucket_arn  = "arn:aws:s3:::security-bucket-log-cd"
+  bucket_name = "security-bucket-log-cd"
+  filename    = "./../cloudtrail_slack_notification"
   variables = {
-    "SLACK_HOOK_URL"      = "https://hooks.slack.com/services/TEE0GF0QZ/DFGHJHGFDFGHJ/YL5MzhCSJFHHUdfgh2Hs1qiMXVH",
-    "SLACK_CHANNEL"       = "testing",
-    "EXCLUDE_ACCOUNT_IDS" = "",
-    "USER_AGENT"          = "signin.amazonaws.com"
+    SLACK_WEBHOOK     = "https://hooks.slack.com/services/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"
+    SLACK_CHANNEL     = "testing"
+    EVENT_IGNORE_LIST = jsonencode(["^Describe*", "^Assume*", "^List*", "^Get*", "^Decrypt*", "^Lookup*", "^BatchGet*", "^CreateLogStream$", "^RenewRole$", "^REST.GET.OBJECT_LOCK_CONFIGURATION$", "TestEventPattern", "TestScheduleExpression", "CreateNetworkInterface", "ValidateTemplate"])
+    EVENT_ALERT_LIST  = jsonencode(["DetachRolePolicy", "ConsoleLogin"])
+    USER_IGNORE_LIST  = jsonencode(["^awslambda_*", "^aws-batch$", "^bamboo*", "^i-*", "^[0-9]*$", "^ecs-service-scheduler$", "^AutoScaling$", "^AWSCloudFormation$", "^CloudTrailBot$", "^SLRManagement$"])
+    SOURCE_LIST       = jsonencode(["signin.amazonaws.com"])
   }
 }
