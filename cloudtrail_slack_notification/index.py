@@ -155,6 +155,7 @@ def create_simplified_event(cloudtrail_event):
 
     try:
         user = cloudtrail_event['userIdentity']['userName']
+        accountId = cloudtrail_event['userIdentity']['accountId']
     except KeyError:
         try:
             principalId = cloudtrail_event['userIdentity']['principalId']
@@ -191,6 +192,7 @@ def create_simplified_event(cloudtrail_event):
 
     simplified_event = {
         'invokedBy': user,
+        'accountId': accountId,
         'eventTime': event_time,
         'eventName': action,
         'resources': resources,
@@ -250,7 +252,12 @@ def create_slack_payload(json_dict, color='#FF0000', reason='Cloudtrail Event.')
                     },
                     {
                         "title": "Region",
-                        "value": json_dict['eventSource'],
+                        "value": json_dict['Region'],
+                        "short": True
+                    },
+                    {
+                        "title": "Account Id",
+                        "value": json_dict['accountId'],
                         "short": True
                     },
                     {
