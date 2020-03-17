@@ -4,7 +4,7 @@
 #Module      : Cloudtrail Logs
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
-  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.12.2"
+  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.12.3"
 
   name        = var.name
   application = var.application
