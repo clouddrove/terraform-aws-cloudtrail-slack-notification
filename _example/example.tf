@@ -12,7 +12,6 @@ module "cloudtrail-slack-notification" {
   enabled     = true
   bucket_arn  = "arn:aws:s3:::security-bucket-log-cd"
   bucket_name = "security-bucket-log-cd"
-  filename    = "./../cloudtrail_slack_notification"
   variables = {
     SLACK_WEBHOOK     = "https://hooks.slack.com/services/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"
     SLACK_CHANNEL     = "testing"
