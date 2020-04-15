@@ -40,7 +40,7 @@
 <hr>
 
 
-We eat, drink, sleep and most importantly love **DevOps**. We are working towards stratergies for standardizing architecture while ensuring security for the infrastructure. We are strong believer of the philosophy <b>Bigger problems are always solved by breaking them into smaller manageable problems</b>. Resonating with microservices architecture, it is considered best-practice to run database, cluster, storage in smaller <b>connected yet manageable pieces</b> within the infrastructure.
+We eat, drink, sleep and most importantly love **DevOps**. We are working towards strategies for standardizing architecture while ensuring security for the infrastructure. We are strong believer of the philosophy <b>Bigger problems are always solved by breaking them into smaller manageable problems</b>. Resonating with microservices architecture, it is considered best-practice to run database, cluster, storage in smaller <b>connected yet manageable pieces</b> within the infrastructure.
 
 This module is basically combination of [Terraform open source](https://www.terraform.io/) and includes automatation tests and examples. It also helps to create and improve your infrastructure with minimalistic code instead of maintaining the whole infrastructure code yourself.
 
@@ -101,21 +101,31 @@ module "cloudtrail-slack-notification" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| application | Lambda Application (e.g. `cd` or `clouddrove`). | string | `` | no |
-| bucket_arn | S3 Bucket ARN. | string | `` | no |
-| bucket_name | S3 Bucket Name. | string | `` | no |
-| enabled | Whether to create lambda function. | bool | `false` | no |
-| environment | Lambda Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
-| filename | The path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used. | string | `` | no |
-| label_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
-| name | Lambda Name  (e.g. `app` or `cluster`). | string | `` | no |
+| application | Lambda Application \(e.g. `cd` or `clouddrove`\). | string | `""` | no |
+| bucket\_arn | S3 Bucket ARN. | string | `""` | no |
+| bucket\_name | S3 Bucket Name. | string | `""` | no |
+| enabled | Whether to create lambda function. | bool | `"false"` | no |
+| environment | Lambda Environment \(e.g. `prod`, `dev`, `staging`\). | string | `""` | no |
+| label\_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
+| name | Lambda Name  \(e.g. `app` or `cluster`\). | string | `""` | no |
 | variables | A map that defines environment variables for the Lambda function. | map | `<map>` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| cloudtrail-slack-arn | The Amazon Resource Name (ARN) identifying your cloudtrail logs Lambda Function. |
+| cloudtrail-slack-arn | The Amazon Resource Name \(ARN\) identifying your cloudtrail logs Lambda Function. |
+
+
+
+
+## Testing
+In this module testing is performed with [terratest](https://github.com/gruntwork-io/terratest) and it creates a small piece of infrastructure, matches the output like ARN, ID and Tags name etc and destroy infrastructure in your AWS account. This testing is written in GO, so you need a [GO environment](https://golang.org/doc/install) in your system.
+
+You need to run the following command in the testing folder:
+```hcl
+  go test -run Test
+```
 
 
 

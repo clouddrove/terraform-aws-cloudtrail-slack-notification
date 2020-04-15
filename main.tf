@@ -1,10 +1,17 @@
 ## Managed By : CloudDrove
 ## Copyright @ CloudDrove. All Right Reserved.
 
+
+resource "null_resource" "cluster" {
+  provisioner "local-exec" {
+    command = format("cd %s/slack && bash build.sh", path.module)
+  }
+}
+
 #Module      : Cloudtrail Logs
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
-  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.12.3"
+  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.12.5"
 
   name        = var.name
   application = var.application
@@ -12,7 +19,7 @@ module "cloudtrail-slack" {
   label_order = var.label_order
   enabled     = var.enabled
 
-  filename = var.filename
+  filename = format("%s/slack/src", path.module)
   handler  = "index.handler"
   runtime  = "python3.7"
   iam_actions = [
@@ -21,6 +28,16 @@ module "cloudtrail-slack" {
     "logs:PutLogEvents",
     "s3:*"
   ]
+  timeout = 30
+
+  names = [
+    "python_layer"
+  ]
+  layer_filenames = [format("%s/slack/packages/Python3-slack.zip", path.module)]
+  compatible_runtimes = [
+    ["python3.8"]
+  ]
+
   statement_ids = [
     "AllowExecutionFromS3Bucket"
   ]

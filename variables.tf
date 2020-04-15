@@ -47,9 +47,3 @@ variable "bucket_name" {
   default     = ""
   description = "S3 Bucket Name."
 }
-
-variable "filename" {
-  type        = string
-  default     = ""
-  description = "The path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used."
-}
