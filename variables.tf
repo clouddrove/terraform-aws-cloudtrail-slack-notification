@@ -47,3 +47,9 @@ variable "bucket_name" {
   default     = ""
   description = "S3 Bucket Name."
 }
+
+variable "managedby" {
+  type        = string
+  default     = "anmol@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+}
