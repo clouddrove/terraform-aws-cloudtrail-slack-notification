@@ -3,6 +3,7 @@
 
 
 resource "null_resource" "cluster" {
+  count  = var.enabled ? 1 : 0
   provisioner "local-exec" {
     command = format("cd %s/slack && bash build.sh", path.module)
   }
