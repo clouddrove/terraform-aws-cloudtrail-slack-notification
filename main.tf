@@ -2,7 +2,7 @@
 ## Copyright @ CloudDrove. All Right Reserved.
 
 
-resource "null_resource" "cluster" {
+resource "null_resource" "main" {
   count  = var.enabled ? 1 : 0
   provisioner "local-exec" {
     command = format("cd %s/slack && bash build.sh", path.module)
