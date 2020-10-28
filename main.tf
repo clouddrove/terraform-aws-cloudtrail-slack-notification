@@ -3,7 +3,7 @@
 
 
 resource "null_resource" "main" {
-  count  = var.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
   provisioner "local-exec" {
     command = format("cd %s/slack && bash build.sh", path.module)
   }
@@ -12,7 +12,8 @@ resource "null_resource" "main" {
 #Module      : Cloudtrail Logs
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
-  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.12.5"
+  source  = "clouddrove/lambda/aws"
+  version = "0.13.0"
 
   name        = var.name
   application = var.application
