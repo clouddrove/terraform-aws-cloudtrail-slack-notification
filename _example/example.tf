@@ -6,9 +6,9 @@ module "cloudtrail-slack-notification" {
   source = "./../"
 
   name        = "cloudtrail-slack-notification"
-  application = "clouddrove"
+  repository  = "https://registry.terraform.io/modules/clouddrove/lambda-site-monitor/aws/0.14.0"
   environment = "test"
-  label_order = ["environment", "name", "application"]
+  label_order = ["name", "environment"]
   enabled     = true
   bucket_arn  = "arn:aws:s3:::security-bucket-log-cd"
   bucket_name = "security-bucket-log-cd"

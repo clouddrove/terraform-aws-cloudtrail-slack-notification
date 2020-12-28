@@ -6,11 +6,18 @@ variable "name" {
   description = "Lambda Name  (e.g. `app` or `cluster`)."
 }
 
-variable "application" {
+variable "repository" {
   type        = string
   default     = ""
-  description = "Lambda Application (e.g. `cd` or `clouddrove`)."
+  description = "Terraform current module repo"
+
+  validation {
+    # regex(...) fails if it cannot find a match
+    condition     = can(regex("^https://", var.repository))
+    error_message = "The module-repo value must be a valid Git repo link."
+  }
 }
+
 
 variable "environment" {
   type        = string
@@ -40,6 +47,7 @@ variable "bucket_arn" {
   type        = string
   default     = ""
   description = "S3 Bucket ARN."
+  sensitive   = true
 }
 
 variable "bucket_name" {
@@ -50,6 +58,6 @@ variable "bucket_name" {
 
 variable "managedby" {
   type        = string
-  default     = "anmol@clouddrove.com"
-  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+  default     = "hello@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove'."
 }

@@ -13,10 +13,10 @@ resource "null_resource" "main" {
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
   source  = "clouddrove/lambda/aws"
-  version = "0.13.0"
+  version = "0.14.0"
 
   name        = var.name
-  application = var.application
+  repository  = var.repository
   environment = var.environment
   managedby   = var.managedby
   label_order = var.label_order
