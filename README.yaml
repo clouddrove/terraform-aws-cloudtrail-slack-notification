@@ -39,7 +39,6 @@ usage : |-
     source      = "clouddrove/cloudtrail-slack-notification/aws"
     version     = "0.14.0"
     name        = "cloudtrail-slack-notification"
-    repository  = "https://registry.terraform.io/modules/clouddrove/lambda-site-monitor/aws/0.14.0"
     environment = "test"
     label_order = ["name", "environment"]
     enabled     = true

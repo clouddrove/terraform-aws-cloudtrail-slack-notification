@@ -1,5 +1,6 @@
-## Managed By : CloudDrove
-## Copyright @ CloudDrove. All Right Reserved.
+# Managed By : CloudDrove
+# Terraform module to create Lambda resource on AWS for sending notification when anything done from console in AWS.
+# Copyright @ CloudDrove. All Right Reserved.
 
 
 resource "null_resource" "main" {
@@ -12,12 +13,13 @@ resource "null_resource" "main" {
 #Module      : Cloudtrail Logs
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
-  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=0.14"
+  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.14.0"
 
   name        = var.name
   repository  = var.repository
   environment = var.environment
   managedby   = var.managedby
+  attributes  = var.attributes
   label_order = var.label_order
   enabled     = var.enabled
 
@@ -55,8 +57,8 @@ module "cloudtrail-slack" {
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
   count  = var.enabled ? 1 : 0
-  bucket = var.bucket_name
 
+  bucket = var.bucket_name
   lambda_function {
     lambda_function_arn = module.cloudtrail-slack.arn
     events              = ["s3:ObjectCreated:*"]

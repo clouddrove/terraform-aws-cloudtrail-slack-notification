@@ -8,16 +8,15 @@ variable "name" {
 
 variable "repository" {
   type        = string
-  default     = ""
+  default     = "https://registry.terraform.io/modules/clouddrove/lambda-site-monitor/aws/"
   description = "Terraform current module repo"
-
-  validation {
-    # regex(...) fails if it cannot find a match
-    condition     = can(regex("^https://", var.repository))
-    error_message = "The module-repo value must be a valid Git repo link."
-  }
 }
 
+variable "attributes" {
+  type        = list(any)
+  default     = []
+  description = "Additional attributes (e.g. `1`)."
+}
 
 variable "environment" {
   type        = string
@@ -26,7 +25,7 @@ variable "environment" {
 }
 
 variable "label_order" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "Label order, e.g. `name`,`application`."
 }
@@ -38,11 +37,19 @@ variable "enabled" {
 }
 
 variable "variables" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "A map that defines environment variables for the Lambda function."
 }
 
+variable "managedby" {
+  type        = string
+  default     = "hello@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove'."
+}
+
+#Module      : Cloudtrail Slack Notification
+#Description : Terraform cloudtrail slack notification module variables.
 variable "bucket_arn" {
   type        = string
   default     = ""
@@ -56,8 +63,3 @@ variable "bucket_name" {
   description = "S3 Bucket Name."
 }
 
-variable "managedby" {
-  type        = string
-  default     = "hello@clouddrove.com"
-  description = "ManagedBy, eg 'CloudDrove'."
-}
