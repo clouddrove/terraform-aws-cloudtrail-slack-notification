@@ -54,11 +54,22 @@ variable "bucket_arn" {
   type        = string
   default     = ""
   description = "S3 Bucket ARN."
-  sensitive   = true
 }
 
 variable "bucket_name" {
   type        = string
   default     = ""
   description = "S3 Bucket Name."
+}
+
+variable "filter_prefix" {
+  type        = string
+  default     = ""
+  description = "Specifies object key name prefix."
+}
+
+variable "filter_suffix" {
+  type        = string
+  default     = ""
+  description = "Specifies object key name suffix."
 }
