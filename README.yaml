@@ -38,6 +38,7 @@ usage : |-
   module "cloudtrail-slack-notification" {
     source      = "clouddrove/cloudtrail-slack-notification/aws"
     version     = "0.14.0"
+
     name        = "cloudtrail-slack-notification"
     environment = "test"
     label_order = ["name", "environment"]

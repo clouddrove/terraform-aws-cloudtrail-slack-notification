@@ -16,7 +16,6 @@ module "s3_bucket" {
   acl            = "private"
 }
 
-
 module "cloudtrail-slack-notification" {
   source = "./../"
 

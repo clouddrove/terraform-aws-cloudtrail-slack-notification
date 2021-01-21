@@ -62,4 +62,3 @@ variable "bucket_name" {
   default     = ""
   description = "S3 Bucket Name."
 }
-

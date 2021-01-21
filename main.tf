@@ -56,7 +56,7 @@ module "cloudtrail-slack" {
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
-  count  = var.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   bucket = var.bucket_name
   lambda_function {
