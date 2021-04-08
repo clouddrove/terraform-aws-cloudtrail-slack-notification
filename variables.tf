@@ -6,10 +6,16 @@ variable "name" {
   description = "Lambda Name  (e.g. `app` or `cluster`)."
 }
 
-variable "application" {
+variable "repository" {
   type        = string
-  default     = ""
-  description = "Lambda Application (e.g. `cd` or `clouddrove`)."
+  default     = "https://registry.terraform.io/modules/clouddrove/lambda-site-monitor/aws/"
+  description = "Terraform current module repo"
+}
+
+variable "attributes" {
+  type        = list(any)
+  default     = []
+  description = "Additional attributes (e.g. `1`)."
 }
 
 variable "environment" {
@@ -19,7 +25,7 @@ variable "environment" {
 }
 
 variable "label_order" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "Label order, e.g. `name`,`application`."
 }
@@ -31,11 +37,19 @@ variable "enabled" {
 }
 
 variable "variables" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "A map that defines environment variables for the Lambda function."
 }
 
+variable "managedby" {
+  type        = string
+  default     = "hello@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove'."
+}
+
+#Module      : Cloudtrail Slack Notification
+#Description : Terraform cloudtrail slack notification module variables.
 variable "bucket_arn" {
   type        = string
   default     = ""
@@ -48,8 +62,14 @@ variable "bucket_name" {
   description = "S3 Bucket Name."
 }
 
-variable "managedby" {
+variable "filter_prefix" {
   type        = string
-  default     = "anmol@clouddrove.com"
-  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+  default     = ""
+  description = "Specifies object key name prefix."
+}
+
+variable "filter_suffix" {
+  type        = string
+  default     = ""
+  description = "Specifies object key name suffix."
 }

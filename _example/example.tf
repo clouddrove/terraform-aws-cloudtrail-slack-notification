@@ -2,16 +2,30 @@ provider "aws" {
   region = "us-east-1"
 }
 
+module "s3_bucket" {
+
+  source  = "clouddrove/s3/aws"
+  version = "0.14.0"
+
+  name        = "clouddrove-bucket"
+  environment = "test"
+  label_order = ["name", "environment"]
+
+  bucket_enabled = true
+  versioning     = true
+  acl            = "private"
+}
+
 module "cloudtrail-slack-notification" {
   source = "./../"
 
   name        = "cloudtrail-slack-notification"
-  application = "clouddrove"
   environment = "test"
-  label_order = ["environment", "name", "application"]
+  label_order = ["name", "environment"]
+
   enabled     = true
-  bucket_arn  = "arn:aws:s3:::security-bucket-log-cd"
-  bucket_name = "security-bucket-log-cd"
+  bucket_arn  = module.s3_bucket.arn
+  bucket_name = module.s3_bucket.id
   variables = {
     SLACK_WEBHOOK     = "https://hooks.slack.com/services/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"
     SLACK_CHANNEL     = "testing"

@@ -158,7 +158,6 @@ def create_simplified_event(cloudtrail_event):
             user = cloudtrail_event['userIdentity']['arn']
         else:
             user = cloudtrail_event['userIdentity']['userName']
-        accountId = cloudtrail_event['userIdentity']['accountId']
     except KeyError:
         try:
             principalId = cloudtrail_event['userIdentity']['principalId']
@@ -191,6 +190,7 @@ def create_simplified_event(cloudtrail_event):
         sourceIP      = cloudtrail_event['sourceIPAddress']
         event_time  = cloudtrail_event['eventTime']
         region      = cloudtrail_event['awsRegion']
+        accountId = cloudtrail_event['recipientAccountId']
     except KeyError:
         fatal('Parsing error: {}'.format(json.dumps(cloudtrail_event, indent=4)))
 
@@ -287,12 +287,11 @@ def create_slack_payload(json_dict, color='#FF0000', reason='Cloudtrail Event.')
 
     return payload
 
-
 def post_to_slack(payload):
     logger.info('POST-ing payload: {}'.format(json.dumps(payload,indent=4)))
 
     try:
-        req = requests.post(SLACK_WEBHOOK, data=str(payload), timeout=3)
+        req = requests.post(SLACK_WEBHOOK, data=json.dumps(payload), timeout=3)
         logger.info("Message posted to {} using {}".format(payload['channel'], SLACK_WEBHOOK))
     except requests.exceptions.Timeout as e:
         fatal("Server connection failed: {}".format(e))
