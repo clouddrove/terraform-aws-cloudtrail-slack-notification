@@ -16,7 +16,7 @@
 <p align="center">
 
 <a href="https://www.terraform.io">
-  <img src="https://img.shields.io/badge/Terraform-v0.13-green" alt="Terraform">
+  <img src="https://img.shields.io/badge/Terraform-v0.14-green" alt="Terraform">
 </a>
 <a href="LICENSE.md">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="Licence">
@@ -75,11 +75,11 @@ Here is an example of how you can use this module in your inventory structure:
 ```hcl
 module "cloudtrail-slack-notification" {
   source      = "clouddrove/cloudtrail-slack-notification/aws"
-  version     = "0.13.0"
+  version     = "0.14.0"
+
   name        = "cloudtrail-slack-notification"
-  application = "clouddrove"
   environment = "test"
-  label_order = ["environment", "name", "application"]
+  label_order = ["name", "environment"]
   enabled     = true
   bucket_arn  = "arn:aws:s3:::security-bucket-log-clouddrove"
   bucket_name = "security-bucket-log-clouddrove"
@@ -101,21 +101,25 @@ module "cloudtrail-slack-notification" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| application | Lambda Application (e.g. `cd` or `clouddrove`). | `string` | `""` | no |
+| attributes | Additional attributes (e.g. `1`). | `list(any)` | `[]` | no |
 | bucket\_arn | S3 Bucket ARN. | `string` | `""` | no |
 | bucket\_name | S3 Bucket Name. | `string` | `""` | no |
 | enabled | Whether to create lambda function. | `bool` | `false` | no |
 | environment | Lambda Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
-| label\_order | Label order, e.g. `name`,`application`. | `list` | `[]` | no |
-| managedby | ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'. | `string` | `"anmol@clouddrove.com"` | no |
+| filter\_prefix | Specifies object key name prefix. | `string` | `""` | no |
+| filter\_suffix | Specifies object key name suffix. | `string` | `""` | no |
+| label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
+| managedby | ManagedBy, eg 'CloudDrove'. | `string` | `"hello@clouddrove.com"` | no |
 | name | Lambda Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
-| variables | A map that defines environment variables for the Lambda function. | `map` | `{}` | no |
+| repository | Terraform current module repo | `string` | `"https://registry.terraform.io/modules/clouddrove/lambda-site-monitor/aws/"` | no |
+| variables | A map that defines environment variables for the Lambda function. | `map(any)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | cloudtrail-slack-arn | The Amazon Resource Name (ARN) identifying your cloudtrail logs Lambda Function. |
+| tags | A mapping of tags to assign to the resource. |
 
 
 
