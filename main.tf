@@ -13,8 +13,7 @@ resource "null_resource" "main" {
 #Module      : Cloudtrail Logs
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
-  source  = "clouddrove/terraform-aws-lambda/aws"
-  version = "0.14.0"
+  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.14.0"
 
   name        = var.name
   repository  = var.repository
