@@ -10,8 +10,8 @@ module "s3_bucket" {
   environment = "test"
   label_order = ["name", "environment"]
 
-  versioning     = true
-  acl            = "private"
+  versioning = true
+  acl        = "private"
 }
 
 module "cloudtrail-slack-notification" {
