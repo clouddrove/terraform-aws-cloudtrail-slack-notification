@@ -8,7 +8,7 @@ variable "name" {
 
 variable "repository" {
   type        = string
-  default     = "https://registry.terraform.io/modules/clouddrove/lambda-site-monitor/aws/"
+  default     = "https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification"
   description = "Terraform current module repo"
 }
 

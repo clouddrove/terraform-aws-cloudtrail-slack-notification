@@ -3,15 +3,13 @@ provider "aws" {
 }
 
 module "s3_bucket" {
-
   source  = "clouddrove/s3/aws"
-  version = "0.14.0"
+  version = "0.15.0"
 
   name        = "clouddrove-bucket"
   environment = "test"
   label_order = ["name", "environment"]
 
-  bucket_enabled = true
   versioning     = true
   acl            = "private"
 }
