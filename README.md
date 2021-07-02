@@ -16,7 +16,7 @@
 <p align="center">
 
 <a href="https://www.terraform.io">
-  <img src="https://img.shields.io/badge/Terraform-v0.14-green" alt="Terraform">
+  <img src="https://img.shields.io/badge/Terraform-v0.15-green" alt="Terraform">
 </a>
 <a href="LICENSE.md">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="Licence">
@@ -75,7 +75,7 @@ Here is an example of how you can use this module in your inventory structure:
 ```hcl
 module "cloudtrail-slack-notification" {
   source      = "clouddrove/cloudtrail-slack-notification/aws"
-  version     = "0.14.0"
+  version     = "0.15.0"
 
   name        = "cloudtrail-slack-notification"
   environment = "test"
@@ -111,7 +111,7 @@ module "cloudtrail-slack-notification" {
 | label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
 | managedby | ManagedBy, eg 'CloudDrove'. | `string` | `"hello@clouddrove.com"` | no |
 | name | Lambda Name  (e.g. `app` or `cluster`). | `string` | `""` | no |
-| repository | Terraform current module repo | `string` | `"https://registry.terraform.io/modules/clouddrove/lambda-site-monitor/aws/"` | no |
+| repository | Terraform current module repo | `string` | `"https://github.com/clouddrove/terraform-aws-cloudtrail-slack-notification"` | no |
 | variables | A map that defines environment variables for the Lambda function. | `map(any)` | `{}` | no |
 
 ## Outputs
