@@ -11,7 +11,7 @@ resource "null_resource" "cluster" {
 #Module      : Cloudtrail Logs
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
-  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=tags/0.12.5"
+  source = "git::https://github.com/clouddrove/terraform-aws-lambda.git?ref=MAN-226"
 
   name        = var.name
   application = var.application
@@ -48,8 +48,10 @@ module "cloudtrail-slack" {
   principals = [
     "s3.amazonaws.com"
   ]
-  source_arns = [var.bucket_arn]
-  variables   = var.variables
+  source_arns           = [var.bucket_arn]
+  variables             = var.variables
+  tracing_mode          = var.tracing_mode
+  attach_tracing_policy = var.attach_tracing_policy
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {

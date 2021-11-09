@@ -19,7 +19,7 @@ variable "environment" {
 }
 
 variable "label_order" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "Label order, e.g. `name`,`application`."
 }
@@ -31,7 +31,7 @@ variable "enabled" {
 }
 
 variable "variables" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "A map that defines environment variables for the Lambda function."
 }
@@ -52,4 +52,16 @@ variable "managedby" {
   type        = string
   default     = "anmol@clouddrove.com"
   description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+}
+
+variable "tracing_mode" {
+  type        = string
+  default     = null
+  description = "Whether to to sample and trace a subset of incoming requests with AWS X-Ray. Valid values are PassThrough and Active."
+}
+
+variable "attach_tracing_policy" {
+  type        = bool
+  default     = false
+  description = "Controls whether X-Ray tracing policy should be added to IAM role for Lambda Function"
 }
