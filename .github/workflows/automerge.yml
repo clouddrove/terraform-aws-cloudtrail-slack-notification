@@ -7,4 +7,4 @@ jobs:
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
     with:
-      tfcheck: 'bucket-basic / Evaluate Terraform versions (1.3.6, ./_example/)'
+      tfcheck: 'cloudtrail / Evaluate Terraform versions (1.6.6, ./_example/)'
