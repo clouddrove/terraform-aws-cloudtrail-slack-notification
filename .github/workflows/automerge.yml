@@ -1,4 +1,3 @@
----
 name: Auto merge
 on:
   pull_request:
@@ -9,4 +8,4 @@ jobs:
       GITHUB: ${{ secrets.GITHUB }}
     with:
       tfcheck: 'bucket-basic / Evaluate Terraform versions (1.3.6, ./_example/)'
-...
+
