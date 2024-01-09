@@ -1,3 +1,4 @@
+---
 name: Auto merge
 on:
   pull_request:
@@ -7,4 +8,5 @@ jobs:
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
     with:
-      tfcheck: 'cloudtrail / Evaluate Terraform versions (1.6.6, ./_example/)'
+      tfcheck: '_example / Check code format'
+...
