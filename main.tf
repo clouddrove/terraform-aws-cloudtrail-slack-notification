@@ -22,7 +22,6 @@ module "cloudtrail-slack" {
   managedby   = var.managedby
   attributes  = var.attributes
   label_order = var.label_order
-  enabled     = var.enabled
 
   filename = format("%s/slack/src", path.module)
   handler  = "index.handler"
