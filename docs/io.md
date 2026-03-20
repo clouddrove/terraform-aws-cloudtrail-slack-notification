@@ -21,4 +21,3 @@
 |------|-------------|
 | cloudtrail-slack-arn | The Amazon Resource Name (ARN) identifying your cloudtrail logs Lambda Function. |
 | tags | A mapping of tags to assign to the resource. |
-
