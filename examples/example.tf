@@ -4,7 +4,7 @@ provider "aws" {
 
 module "s3_bucket" {
   source  = "clouddrove/s3/aws"
-  version = "2.0.0"
+  version = "2.0.1"
 
   name        = "clouddrove-bucket"
   environment = "test"
