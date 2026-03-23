@@ -14,7 +14,7 @@ resource "null_resource" "main" {
 #Description : This terraform module is designed to create cloudtrail log.
 module "cloudtrail-slack" {
   source  = "clouddrove/lambda/aws"
-  version = "1.3.1"
+  version = "1.3.2"
 
   name        = var.name
   repository  = var.repository
@@ -34,7 +34,7 @@ module "cloudtrail-slack" {
   ]
   timeout = 30
 
-  names = [
+  layer_names = [
     "python_layer"
   ]
   layer_filenames = [format("%s/slack/packages/Python3-slack.zip", path.module)]
